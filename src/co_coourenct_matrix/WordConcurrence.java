@@ -7,17 +7,21 @@ import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapred.FileInputFormat;
-import org.apache.hadoop.mapred.FileOutputFormat;
-import org.apache.hadoop.mapred.TextOutputFormat;
+//import org.apache.hadoop.mapred.FileInputFormat;
+//import org.apache.hadoop.mapred.FileOutputFormat;
+//import org.apache.hadoop.mapred.TextOutputFormat;
 import org.apache.hadoop.mapreduce.Job;
 //import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 /**
   *统计在若干篇文档中两个英文单词在一定窗口内同时出现的次数
@@ -105,7 +109,8 @@ public class WordConcurrence {
     public static void main(String[] args) throws IOException,
             InterruptedException, ClassNotFoundException {
         
-		Job wordConcurrenceJob = new Job();
+    	Configuration conf=new Configuration();
+		Job wordConcurrenceJob = Job.getInstance(conf,"wordConccurrence");
         wordConcurrenceJob.setJobName("wordConcurrenceJob");
         wordConcurrenceJob.setJarByClass(WordConcurrence.class);
         wordConcurrenceJob.getConfiguration().setInt("window",
@@ -122,10 +127,10 @@ public class WordConcurrence {
         wordConcurrenceJob.setOutputValueClass(IntWritable.class);
 
 
-        wordConcurrenceJob.setInputFormatClass(co_coourenct_matrix.WholeFileInputFormat.class);
+        wordConcurrenceJob.setInputFormatClass(WholeFileInputFormat.class);
         wordConcurrenceJob.setOutputFormatClass(TextOutputFormat.class);
-        FileInputFormat.addInputPath(wordConcurrenceJob, new Path(args[0]));
-        FileOutputFormat.setOutputPath(wordConcurrenceJob, new Path(args[1]));
+        FileInputFormat.setInputPaths(wordConcurrenceJob, new Path("hdfs://localhost:9000/input"));
+        FileOutputFormat.setOutputPath(wordConcurrenceJob, new Path("hdfs://localhost:9000/output"));
 
 
         wordConcurrenceJob.waitForCompletion(true);
