@@ -7,6 +7,18 @@ import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.BytesWritable;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapred.FileInputFormat;
+import org.apache.hadoop.mapred.FileOutputFormat;
+import org.apache.hadoop.mapred.TextOutputFormat;
+import org.apache.hadoop.mapreduce.Job;
+//import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
+
 /**
   *统计在若干篇文档中两个英文单词在一定窗口内同时出现的次数
   * 如何计算二个单词出现的频率,使用pairs算法,该算法的流程就是:
@@ -18,7 +30,7 @@ import java.util.regex.Pattern;
   * 1 who,enjoy 1 who,main 1 who,meal 1 who,midday 1 who,now 1 who,their 1
   * who,traditionally
   */
-public class WordConcurrnce {
+public class WordConcurrence {
     private static int MAX_WINDOW = 20;// 单词同现的最大窗口大小
     private static String wordRegex = "([a-zA-Z]{1,})";// 仅仅匹配由字母组成的简单英文单词
     private static Pattern wordPattern = Pattern.compile(wordRegex);// 用于识别英语单词(带连字符-)
@@ -92,9 +104,10 @@ public class WordConcurrnce {
 
     public static void main(String[] args) throws IOException,
             InterruptedException, ClassNotFoundException {
-        Job wordConcurrenceJob = new Job();
+        
+		Job wordConcurrenceJob = new Job();
         wordConcurrenceJob.setJobName("wordConcurrenceJob");
-        wordConcurrenceJob.setJarByClass(WordConcurrnce.class);
+        wordConcurrenceJob.setJarByClass(WordConcurrence.class);
         wordConcurrenceJob.getConfiguration().setInt("window",
                 Integer.parseInt(args[2]));
 
