@@ -18,7 +18,7 @@ public class WholeFileInputFormat extends FileInputFormat<Text,BytesWritable>{
 	protected boolean isSplitable(JobContext context,Path filename) {
 		return false;
 	}
-	
+	//传入参数InputSplit 
 	@Override
 	public SingleFileNameReader createRecordReader(
 			InputSplit split,TaskAttemptContext context)throws IOException,InterruptedException{
