@@ -106,22 +106,25 @@ public class WordConcurrence {
         Job wordConcurrenceJob = Job.getInstance(conf, "wordConccurrence");
         wordConcurrenceJob.setJobName("wordConcurrenceJob");
         wordConcurrenceJob.setJarByClass(WordConcurrence.class);
-        // wordConcurrenceJob.getConfiguration().setInt("window",
-        // Integer.parseInt(args[2]));
+        wordConcurrenceJob.getConfiguration().setInt("window", Integer.parseInt(args[2]));
 
+        //Mapper设置
         wordConcurrenceJob.setMapperClass(WordConcurrenceMapper.class);
         wordConcurrenceJob.setMapOutputKeyClass(co_coourenct_matrix.WordPair.class);
         wordConcurrenceJob.setMapOutputValueClass(IntWritable.class);
 
+        //Reducer设置
         wordConcurrenceJob.setReducerClass(WordConcurrenceReducer.class);
         wordConcurrenceJob.setOutputKeyClass(co_coourenct_matrix.WordPair.class);
         wordConcurrenceJob.setOutputValueClass(IntWritable.class);
 
+        //输入输出路径设置
         wordConcurrenceJob.setInputFormatClass(WholeFileInputFormat.class);
         wordConcurrenceJob.setOutputFormatClass(TextOutputFormat.class);
         FileInputFormat.setInputPaths(wordConcurrenceJob, new Path(args[0]));
         FileOutputFormat.setOutputPath(wordConcurrenceJob, new Path(args[1]));
 
+        //等待进程结束
         wordConcurrenceJob.waitForCompletion(true);
         System.out.println("finished!");
     }
