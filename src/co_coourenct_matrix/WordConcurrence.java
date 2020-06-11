@@ -127,7 +127,7 @@ public class WordConcurrence {
         wordConcurrenceJob.setOutputValueClass(IntWritable.class);
 
 
-        wordConcurrenceJob.setInputFormatClass(WholeFileInputFormat.class);
+        //wordConcurrenceJob.setInputFormatClass(WholeFileInputFormat.class);
         wordConcurrenceJob.setOutputFormatClass(TextOutputFormat.class);
         FileInputFormat.setInputPaths(wordConcurrenceJob, new Path("hdfs://localhost:9000/input"));
         FileOutputFormat.setOutputPath(wordConcurrenceJob, new Path("hdfs://localhost:9000/output"));
