@@ -55,15 +55,20 @@ public class WordPair implements WritableComparable<WordPair>{
 		if(this.equals(o))
 			return 0;
 		else
+			//字符串比较
 			return (wordA+wordB).compareTo(o.getWordA()+o.getWordB());
 	}
 	
 	@Override
 	public boolean equals(Object o) {
+		//看一下对象是不是WordPair
 		if(!(o instanceof WordPair))
+			//不是这个类，肯定不相等
 			return false;
+		//转成这个类
 		WordPair w=(WordPair)o;
-		if((this.wordA.equals(w.wordA)&&this.wordA.equals(w.wordB))
+		//如果两个单词都相等（不分前后顺序），就相等
+		if((this.wordA.equals(w.wordA)&&this.wordB.equals(w.wordB))
 				|| (this.wordB.contentEquals(w.wordA)&&this.wordA.contentEquals(w.wordB)))
 			return true;
 		return false;
