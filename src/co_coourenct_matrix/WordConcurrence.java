@@ -93,6 +93,7 @@ public class WordConcurrence {
         public void reduce(co_coourenct_matrix.WordPair wordPair, Iterable<IntWritable> frequence, Context context)
                 throws IOException, InterruptedException {
             int sum = 0;
+            //求和，统计一对单词出现的总次数
             for (IntWritable val : frequence) {
                 sum += val.get();
             }
@@ -101,12 +102,12 @@ public class WordConcurrence {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
-
+        //一些配置
         Configuration conf = new Configuration();
         Job wordConcurrenceJob = Job.getInstance(conf, "wordConccurrence");
         wordConcurrenceJob.setJobName("wordConcurrenceJob");
         wordConcurrenceJob.setJarByClass(WordConcurrence.class);
-        wordConcurrenceJob.getConfiguration().setInt("window", Integer.parseInt(args[2]));
+        // wordConcurrenceJob.getConfiguration().setInt("window", Integer.parseInt(args[2]));
 
         //Mapper设置
         wordConcurrenceJob.setMapperClass(WordConcurrenceMapper.class);
