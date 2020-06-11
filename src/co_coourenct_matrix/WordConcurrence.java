@@ -12,11 +12,7 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
-//import org.apache.hadoop.mapred.FileInputFormat;
-//import org.apache.hadoop.mapred.FileOutputFormat;
-//import org.apache.hadoop.mapred.TextOutputFormat;
 import org.apache.hadoop.mapreduce.Job;
-//import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
@@ -113,8 +109,8 @@ public class WordConcurrence {
 		Job wordConcurrenceJob = Job.getInstance(conf,"wordConccurrence");
         wordConcurrenceJob.setJobName("wordConcurrenceJob");
         wordConcurrenceJob.setJarByClass(WordConcurrence.class);
-        wordConcurrenceJob.getConfiguration().setInt("window",
-                Integer.parseInt(args[2]));
+        //wordConcurrenceJob.getConfiguration().setInt("window",
+        //        Integer.parseInt(args[2]));
 
 
         wordConcurrenceJob.setMapperClass(WordConcurrenceMapper.class);
@@ -127,7 +123,7 @@ public class WordConcurrence {
         wordConcurrenceJob.setOutputValueClass(IntWritable.class);
 
 
-        //wordConcurrenceJob.setInputFormatClass(WholeFileInputFormat.class);
+        wordConcurrenceJob.setInputFormatClass(WholeFileInputFormat.class);
         wordConcurrenceJob.setOutputFormatClass(TextOutputFormat.class);
         FileInputFormat.setInputPaths(wordConcurrenceJob, new Path("hdfs://localhost:9000/input"));
         FileOutputFormat.setOutputPath(wordConcurrenceJob, new Path("hdfs://localhost:9000/output"));

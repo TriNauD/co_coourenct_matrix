@@ -69,7 +69,8 @@ public class WordPair implements WritableComparable<WordPair>{
 		return false;
 	}
 	
-	public int haseCode() {
+	@Override
+	public int hashCode() {
 		return (wordA.hashCode()+wordB.hashCode())*17;
 	}
 
