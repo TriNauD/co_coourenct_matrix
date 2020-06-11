@@ -72,10 +72,13 @@ public class WordConcurrence {
                     windowQueue.remove();
                 }
             }
-            while (!(windowQueue.size() <= 1)) {
+            //队列如果还有单词
+            while (windowQueue.size() > 1) {
                 Iterator<String> it = windowQueue.iterator();
+                //拿到第一个单词
                 String w1 = it.next();
                 while (it.hasNext()) {
+                    //和后面所有单词组队
                     context.write(new co_coourenct_matrix.WordPair(w1, it.next()), one);
                 }
                 windowQueue.remove();
